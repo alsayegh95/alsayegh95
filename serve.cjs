@@ -246,6 +246,13 @@ function sendHtml(res, html, statusCode) {
   res.end(html);
 }
 
+function isStaticAssetPath(url) {
+  return url.indexOf("/assets/") === 0 ||
+    url === "/favicon.ico" ||
+    url === "/robots.txt" ||
+    url === "/manifest.webmanifest";
+}
+
 function portalHtml() {
   return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>" +
     "<title>Abdullah Alsayegh</title><style>body{font-family:Inter,Segoe UI,Arial,sans-serif;background:#0b1220;color:#e7eefc;margin:0}.wrap{max-width:980px;margin:60px auto;padding:24px}h1{font-size:32px;margin:0 0 10px}p{color:#a9b7d0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:28px}.card{display:block;padding:24px;border-radius:16px;background:linear-gradient(135deg,#14213d,#1f2f58);border:1px solid #2a3f75;color:#fff;text-decoration:none}.card h2{margin:0 0 8px;font-size:24px}.card span{color:#bcd0ff}.foot{margin-top:36px;color:#8ea2c7;font-size:13px}</style></head><body><div class='wrap'><h1>Abdullah Alsayegh</h1><p>Select a destination:</p><div class='grid'><a class='card' href='https://mission.abdullahalsayegh.sa'><h2>Mission Control</h2><span>Agent operations dashboard</span></a><a class='card' href='https://forum.abdullahalsayegh.sa'><h2>Forum</h2><span>Community space (coming soon)</span></a></div><div class='foot'>© 2026 Abdullah Alsayegh</div></div></body></html>";
@@ -270,7 +277,8 @@ var server = http.createServer(function(req, res) {
   if (isForumHost(host)) return sendHtml(res, forumHtml(), 200);
 
   // All non-portal pages require authentication (Mission Control and any other host)
-  if (!isPortalHost(host) && !isForumHost(host) && !requireAuth(req, res)) return;
+  // But allow static assets so browsers don't render a blank page before auth state is reused.
+  if (!isPortalHost(host) && !isForumHost(host) && !isStaticAssetPath(url) && !requireAuth(req, res)) return;
 
   if (url === "/api/cron/jobs") return sendJson(res, readCronJobs());
   if (url === "/api/activity/recent") return sendJson(res, readRecentRuns(50));
