@@ -11,9 +11,11 @@ const runsDir = path.join(cronDir, "runs");
 const agentsDir = path.join(os.homedir(), ".openclaw", "agents");
 const activityLogPath = path.join(os.homedir(), ".openclaw", "activity.jsonl");
 
-// Basic auth (set env vars to override defaults)
-const BASIC_AUTH_USER = process.env.MC_BASIC_AUTH_USER || "alsayegh";
-const BASIC_AUTH_PASS_HASH = process.env.MC_BASIC_AUTH_PASS_HASH || "cd4c57086117d8ab5acdc315a7cd02e32b0882aff09d098688a5e2e84d397764";
+// App login auth (set env vars to override defaults)
+const BASIC_AUTH_USER = process.env.DB_BASIC_AUTH_USER || "alsayegh";
+const BASIC_AUTH_PASS_HASH = process.env.DB_BASIC_AUTH_PASS_HASH || "cd4c57086117d8ab5acdc315a7cd02e32b0882aff09d098688a5e2e84d397764";
+const AUTH_COOKIE_NAME = "db_auth";
+const AUTH_COOKIE_VALUE = sha256(BASIC_AUTH_USER + ":" + BASIC_AUTH_PASS_HASH).slice(0, 32);
 
 function sha256(s) {
   return crypto.createHash("sha256").update(String(s || ""), "utf8").digest("hex");
@@ -41,6 +43,51 @@ function requireAuth(req, res) {
   });
   res.end("Authentication required");
   return false;
+}
+
+function parseCookies(req) {
+  var h = (req.headers && req.headers.cookie) ? String(req.headers.cookie) : "";
+  var out = {};
+  h.split(";").forEach(function(part) {
+    var i = part.indexOf("=");
+    if (i > 0) {
+      var k = part.slice(0, i).trim();
+      var v = part.slice(i + 1).trim();
+      out[k] = v;
+    }
+  });
+  return out;
+}
+
+function hasSessionAuth(req) {
+  var c = parseCookies(req);
+  return c[AUTH_COOKIE_NAME] === AUTH_COOKIE_VALUE;
+}
+
+function loginHtml(errorText) {
+  var err = errorText ? "<p style='color:#ffb4b4'>" + errorText + "</p>" : "";
+  return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>" +
+    "<title>Dashboard Login</title><style>body{font-family:Inter,Segoe UI,Arial,sans-serif;background:#faf8f3;color:#1a1a1a;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}.box{width:min(420px,92vw);padding:28px;border-radius:20px;background:#fff;border:1px solid #e5e0d5;box-shadow:0 4px 24px rgba(0,0,0,0.06)}h1{margin:0 0 8px;color:#1a1a1a}p{color:#6b6b6b}.f{display:flex;flex-direction:column;gap:10px;margin-top:12px}input{padding:10px 12px;border-radius:12px;border:1px solid #e5e0d5;background:#faf8f3;color:#1a1a1a}button{margin-top:8px;padding:10px 12px;border:0;border-radius:12px;background:#facc15;color:#1a1a1a;font-weight:700;cursor:pointer}button:hover{background:#eab308}</style></head><body><div class='box'><h1>Dashboard</h1><p>Login required</p>" + err + "<form class='f' method='POST' action='/__login'><input name='username' placeholder='Username' required/><input name='password' type='password' placeholder='Password' required/><button type='submit'>Sign in</button></form></div></body></html>";
+}
+
+function parseFormUrlEncoded(body) {
+  var obj = {};
+  String(body || "").split("&").forEach(function(kv) {
+    if (!kv) return;
+    var i = kv.indexOf("=");
+    var k = i >= 0 ? kv.slice(0, i) : kv;
+    var v = i >= 0 ? kv.slice(i + 1) : "";
+    obj[decodeURIComponent(k.replace(/\+/g, " "))] = decodeURIComponent(v.replace(/\+/g, " "));
+  });
+  return obj;
+}
+
+function setAuthCookie(res) {
+  res.setHeader("Set-Cookie", AUTH_COOKIE_NAME + "=" + AUTH_COOKIE_VALUE + "; Path=/; HttpOnly; SameSite=Lax; Secure");
+}
+
+function clearAuthCookie(res) {
+  res.setHeader("Set-Cookie", AUTH_COOKIE_NAME + "=; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=0");
 }
 
 function sendJson(res, data, statusCode) {
@@ -233,6 +280,10 @@ function isMissionHost(host) {
   return host === "mission.abdullahalsayegh.sa";
 }
 
+function isDashboardHost(host) {
+  return host === "dashboard.abdullahalsayegh.sa";
+}
+
 function isForumHost(host) {
   return host === "forum.abdullahalsayegh.sa";
 }
@@ -276,9 +327,39 @@ var server = http.createServer(function(req, res) {
   if (isPortalHost(host)) return sendHtml(res, portalHtml(), 200);
   if (isForumHost(host)) return sendHtml(res, forumHtml(), 200);
 
-  // All non-portal pages require authentication (Mission Control and any other host)
-  // But allow static assets so browsers don't render a blank page before auth state is reused.
-  if (!isPortalHost(host) && !isForumHost(host) && !isStaticAssetPath(url) && !requireAuth(req, res)) return;
+  // Dashboard host uses app-login + secure cookie session
+  if (isDashboardHost(host)) {
+    if (url === "/logout") {
+      clearAuthCookie(res);
+      res.writeHead(302, { "Location": "/" });
+      return res.end();
+    }
+
+    if (url === "/__login" && req.method === "POST") {
+      var raw = "";
+      req.on("data", function(c) { raw += c; });
+      req.on("end", function() {
+        var form = parseFormUrlEncoded(raw);
+        var u = form.username || "";
+        var p = form.password || "";
+        if (u === BASIC_AUTH_USER && sha256(p) === BASIC_AUTH_PASS_HASH) {
+          setAuthCookie(res);
+          res.writeHead(302, { "Location": "/" });
+          return res.end();
+        }
+        return sendHtml(res, loginHtml("Invalid username or password"), 401);
+      });
+      return;
+    }
+
+    // Allow login page and static assets without session
+    if (!hasSessionAuth(req) && !isStaticAssetPath(url)) {
+      return sendHtml(res, loginHtml(""), 200);
+    }
+  } else {
+    // Any non-portal/non-forum/non-mission host: keep basic auth fallback
+    if (!isStaticAssetPath(url) && !requireAuth(req, res)) return;
+  }
 
   if (url === "/api/cron/jobs") return sendJson(res, readCronJobs());
   if (url === "/api/activity/recent") return sendJson(res, readRecentRuns(50));
@@ -314,4 +395,4 @@ var server = http.createServer(function(req, res) {
   res.writeHead(200, { "Content-Type": mime[ext] || "application/octet-stream", "Access-Control-Allow-Origin": "*" });
   fs.createReadStream(fp).pipe(res);
 });
-server.listen(4000, "0.0.0.0", function() { console.log("Mission Control running on http://0.0.0.0:4000"); });
+server.listen(4002, "0.0.0.0", function() { console.log("Dashboard running on http://0.0.0.0:4002"); });

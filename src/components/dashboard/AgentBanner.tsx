@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { mockConnectedServices, mockCapabilities } from "@/lib/mock-data";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
@@ -9,16 +8,16 @@ export function AgentBanner() {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5 card-hover">
+    <div className="rounded-2xl border border-yellow-200 bg-gradient-to-br from-yellow-50 via-white to-amber-50 p-6 shadow-sm card-hover">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">🦀</span>
+          <span className="h-10 w-10 rounded-xl bg-yellow-400 flex items-center justify-center text-xl font-bold text-black shadow-sm">⚡</span>
           <div>
             <h1 className="text-xl font-bold text-foreground">
-              OpenClaw Prime
-              <span className="ml-2 text-xs font-mono text-muted-foreground">v2.4.1</span>
-              <Badge variant="outline" className="ml-2 text-[10px] border-success text-success">
-                Up to date
+              Dashboard
+              <span className="ml-2 text-xs font-mono text-muted-foreground">v1.0.0</span>
+              <Badge variant="outline" className="ml-2 text-[10px] border-emerald-400 text-emerald-600 bg-emerald-50">
+                6 Agents Online
               </Badge>
             </h1>
           </div>
@@ -36,21 +35,21 @@ export function AgentBanner() {
           {/* Stats Row */}
           <div className="flex flex-wrap gap-6 text-sm">
             <div>
-              <span className="text-muted-foreground">Model: </span>
-              <span className="font-mono text-foreground">GPT-4o-mini</span>
+              <span className="text-muted-foreground">Primary Model: </span>
+              <span className="font-mono text-foreground">claude-opus-4-6</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Context: </span>
-              <Progress value={62} className="w-24 h-2" />
-              <span className="font-mono text-foreground text-xs">62%</span>
+              <span className="text-muted-foreground">Gateway: </span>
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="font-mono text-emerald-600 text-xs">Connected</span>
             </div>
             <div>
-              <span className="text-muted-foreground">Sessions: </span>
-              <span className="font-mono text-foreground">3 active</span>
+              <span className="text-muted-foreground">Agents: </span>
+              <span className="font-mono text-foreground">6 registered</span>
             </div>
             <div>
-              <span className="text-muted-foreground">Mode: </span>
-              <span className="font-mono text-success">Autonomous</span>
+              <span className="text-muted-foreground">Cron Jobs: </span>
+              <span className="font-mono text-foreground">9 active</span>
             </div>
           </div>
 
@@ -63,10 +62,10 @@ export function AgentBanner() {
                   key={svc.name}
                   variant="outline"
                   className={cn(
-                    "text-[10px] font-mono",
+                    "text-[10px] font-mono rounded-lg",
                     svc.connected
-                      ? "border-success/30 text-success bg-success/5"
-                      : "border-border text-muted-foreground"
+                      ? "border-emerald-300 text-emerald-700 bg-emerald-50"
+                      : "border-stone-300 text-muted-foreground bg-stone-50"
                   )}
                 >
                   {svc.name}
@@ -80,7 +79,7 @@ export function AgentBanner() {
             <p className="text-xs text-muted-foreground mb-2">Capabilities</p>
             <div className="flex flex-wrap gap-1.5">
               {mockCapabilities.map((cap) => (
-                <Badge key={cap} className="text-[10px] bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
+                <Badge key={cap} className="text-[10px] bg-yellow-100 text-yellow-800 border-yellow-300 hover:bg-yellow-200 rounded-lg">
                   {cap}
                 </Badge>
               ))}
@@ -89,9 +88,10 @@ export function AgentBanner() {
 
           {/* Quick Info */}
           <div className="flex flex-wrap gap-6 text-xs text-muted-foreground">
-            <span>Operator: <span className="text-foreground">Abdullah</span></span>
-            <span>GitHub: <span className="text-foreground font-mono">@abdullah</span></span>
-            <span>Workspace: <span className="text-foreground font-mono">~/openclaw</span></span>
+            <span>Operator: <span className="text-foreground font-medium">Abdullah Alsayegh</span></span>
+            <span>GitHub: <span className="text-foreground font-mono">@alsayegh95</span></span>
+            <span>Location: <span className="text-foreground">Riyadh, Saudi Arabia</span></span>
+            <span>Workspace: <span className="text-foreground font-mono">~/.openclaw</span></span>
           </div>
         </div>
       )}

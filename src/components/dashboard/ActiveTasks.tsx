@@ -16,7 +16,7 @@ const columns = [
 
 export function ActiveTasks() {
   return (
-    <div className="rounded-xl border border-border bg-card p-5 card-hover">
+    <div className="rounded-2xl border border-border bg-white p-5 shadow-sm card-hover">
       <h2 className="text-sm font-semibold text-foreground mb-4">Active Tasks</h2>
       <div className="grid grid-cols-3 gap-3">
         {columns.map((col) => (
