@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
-import { mockMemories, mockActivity, mockContentPipeline, mockCronJobs } from "@/lib/mock-data";
+import { mockMemories, mockActivity, mockCronJobs } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -11,9 +11,8 @@ export default function SearchPage() {
   const q = query.toLowerCase();
   const memResults = q ? mockMemories.filter((m) => m.title.toLowerCase().includes(q) || m.content.toLowerCase().includes(q)) : [];
   const actResults = q ? mockActivity.filter((a) => a.description.toLowerCase().includes(q)) : [];
-  const contentResults = q ? mockContentPipeline.filter((c) => c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q)) : [];
   const cronResults = q ? mockCronJobs.filter((j) => j.name.toLowerCase().includes(q)) : [];
-  const totalResults = memResults.length + actResults.length + contentResults.length + cronResults.length;
+  const totalResults = memResults.length + actResults.length + cronResults.length;
 
   return (
     <DashboardLayout>
@@ -48,14 +47,6 @@ export default function SearchPage() {
           <Section title="Activity" count={actResults.length}>
             {actResults.map((a, i) => (
               <ResultItem key={a.id} index={i} title={a.description} snippet={a.details} meta={a.agent} />
-            ))}
-          </Section>
-        )}
-
-        {contentResults.length > 0 && (
-          <Section title="Content" count={contentResults.length}>
-            {contentResults.map((c, i) => (
-              <ResultItem key={c.id} index={i} title={c.title} snippet={c.description} meta={c.stage} />
             ))}
           </Section>
         )}

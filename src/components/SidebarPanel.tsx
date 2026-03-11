@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   Activity,
   Calendar,
-  Kanban,
   Brain,
   Search,
   Users,
@@ -21,7 +20,6 @@ const navItems = [
   { label: "Agents", path: "/agents", icon: Users },
   { label: "Activity", path: "/feed", icon: Activity },
   { label: "Calendar", path: "/calendar", icon: Calendar },
-  { label: "Pipeline", path: "/pipeline", icon: Kanban },
   { label: "Memory", path: "/memory", icon: Brain },
   { label: "Search", path: "/search", icon: Search },
 ];
