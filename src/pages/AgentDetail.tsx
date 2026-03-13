@@ -112,6 +112,17 @@ const agentInfo: Record<string, {
     skills: [],
     channels: [{ name: "Telegram (rima)", connected: true }],
   },
+  abeer: {
+    name: "Abeer",
+    emoji: "💳",
+    model: "gpt-5.3-codex",
+    description: "Credit card tracker — manages USA credit card data, syncs from spreadsheet, monitors balances and due dates.",
+    workspace: "C:\\Users\\mrhea\\Agents\\Abeer",
+    files: ["AGENTS.md", "SOUL.md", "IDENTITY.md", "MEMORY.md", "USA_Credit_Card_.xlsx"],
+    tools: ["exec", "read", "write", "message", "memory_search", "memory_get"],
+    skills: [],
+    channels: [{ name: "Telegram (abeer)", connected: true }],
+  },
 };
 
 async function fetchAgentActivity(agentId: string): Promise<RunEntry[]> {

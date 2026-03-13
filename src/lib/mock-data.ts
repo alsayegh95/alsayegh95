@@ -5,6 +5,7 @@ export const mockAgents = [
   { id: "yazed-jr", name: "Yazed JR", model: "gpt-5.3-codex", status: "idle" as const, lastHeartbeat: Date.now() - 3600000, tokenCount: 31500, currentTask: "Idle — next run at 16:00" },
   { id: "mohammed-jr", name: "Mohammed JR", model: "gpt-5.3-codex", status: "idle" as const, lastHeartbeat: Date.now() - 3600000, tokenCount: 18700, currentTask: "Idle — next run at 17:30" },
   { id: "rima", name: "Rima", model: "gpt-5.3-codex", status: "active" as const, lastHeartbeat: Date.now() - 60000, tokenCount: 11800, currentTask: "Morning weight check-in delivered" },
+  { id: "abeer", name: "Abeer", model: "gpt-5.3-codex", status: "idle" as const, lastHeartbeat: Date.now() - 7200000, tokenCount: 8400, currentTask: "Credit card tracker — awaiting next sync" },
 ];
 
 export const mockSchedule = [

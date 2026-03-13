@@ -25,7 +25,7 @@ const painPoints = [
 
 export default function SoundFamiliar() {
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-20 lg:py-32 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

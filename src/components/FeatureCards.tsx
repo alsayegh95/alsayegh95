@@ -30,7 +30,7 @@ const features = [
 
 export default function FeatureCards() {
   return (
-    <section id="resources" className="py-20 lg:py-32 bg-white">
+    <section id="resources" className="py-20 lg:py-32 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ export default function FeatureCards() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
+              className="bg-card rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
             >
               <div className={`w-12 h-12 rounded-xl ${f.color} flex items-center justify-center mb-5`}>
                 <f.icon className="w-6 h-6" />

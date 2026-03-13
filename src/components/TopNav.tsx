@@ -7,7 +7,7 @@ interface TopNavProps {
 
 export function TopNav({ onToggleSidebar }: TopNavProps) {
   return (
-    <header className="sticky top-0 z-50 h-14 border-b border-border bg-white/80 backdrop-blur-xl flex items-center px-4 gap-4">
+    <header className="sticky top-0 z-50 h-14 border-b border-border bg-background/80 backdrop-blur-xl flex items-center px-4 gap-4">
       <Button
         variant="ghost"
         size="icon"
@@ -17,10 +17,10 @@ export function TopNav({ onToggleSidebar }: TopNavProps) {
         <Menu className="h-5 w-5" />
       </Button>
 
-      <div className="flex items-center gap-2.5">
-        <span className="h-7 w-7 rounded-lg bg-yellow-400 flex items-center justify-center text-sm font-bold text-black">D</span>
+      <div className="flex items-center gap-2">
+        <span className="text-xl">🦀</span>
         <span className="font-bold text-foreground tracking-tight text-lg">
-          Dashboard
+          Mission Control
         </span>
       </div>
 
@@ -30,9 +30,9 @@ export function TopNav({ onToggleSidebar }: TopNavProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
           </span>
-          <span className="text-muted-foreground hidden sm:inline">Online</span>
+          <span className="text-muted-foreground hidden sm:inline">Gateway Online</span>
         </div>
-        <div className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center text-xs font-bold text-black">
+        <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-foreground">
           AA
         </div>
       </div>

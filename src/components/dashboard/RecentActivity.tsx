@@ -1,4 +1,4 @@
-﻿import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, XCircle, Clock } from "lucide-react";
@@ -22,6 +22,8 @@ const agentNames: Record<string, string> = {
   main: "Claw",
   khalid: "Khalid",
   rima: "Rima",
+  abeer: "Abeer",
+  codex: "Codex",
 };
 
 function formatTimeAgo(timestamp: number) {
@@ -64,7 +66,7 @@ export function RecentActivity() {
   const items = runs || [];
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-5 h-full shadow-sm card-hover">
+    <div className="rounded-2xl border border-border bg-card p-5 h-full shadow-sm card-hover">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-semibold text-foreground">Recent Activity</h2>
         <Link to="/feed" className="text-xs text-primary hover:underline">View all</Link>
@@ -94,7 +96,7 @@ export function RecentActivity() {
                   <span>{agent}</span>
                   <span className="flex items-center gap-1"><Clock className="h-2.5 w-2.5" />{formatDuration(item.durationMs)}</span>
                   <span>{formatTimeAgo(item.ts)}</span>
-                  {item.delivered && <span className="text-success">✓ delivered</span>}
+                  {item.delivered && <span className="text-success">? delivered</span>}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-﻿import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { CheckCircle2, Circle, AlertCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -114,7 +114,7 @@ export function TodaySchedule() {
   items.sort((a, b) => a.sortMs - b.sortMs);
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-5 h-full shadow-sm card-hover">
+    <div className="rounded-2xl border border-border bg-card p-5 h-full shadow-sm card-hover">
       <h2 className="text-sm font-semibold text-foreground mb-4">Today's Schedule</h2>
       <div className="space-y-3">
         {items.length === 0 && (

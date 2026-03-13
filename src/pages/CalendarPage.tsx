@@ -1,4 +1,4 @@
-﻿import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/DashboardLayout";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";

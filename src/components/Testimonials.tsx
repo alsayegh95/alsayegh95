@@ -61,7 +61,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-20 lg:py-32 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -83,7 +83,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-shadow"
+              className="bg-card rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">

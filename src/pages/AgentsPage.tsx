@@ -92,6 +92,18 @@ const agents = [
     schedule: "Daily 8AM / 8PM + Sunday reminders",
     channels: ["Telegram (rima)"],
   },
+  {
+    id: "abeer",
+    name: "Abeer",
+    emoji: "💳",
+    role: "Credit Card Tracker",
+    model: "gpt-5.3-codex",
+    location: "FINANCE DESK",
+    isCeo: false,
+    description: "Tracks and manages USA credit card data. Syncs from spreadsheet, monitors balances and due dates.",
+    schedule: "On-demand",
+    channels: ["Telegram (abeer)"],
+  },
 ];
 
 async function fetchCronJobs(): Promise<CronJob[]> {

@@ -48,7 +48,7 @@ export default function ComparisonTable() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
+          className="mt-12 bg-card rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
         >
           <div className="overflow-x-auto">
             <table className="w-full">

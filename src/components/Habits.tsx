@@ -16,7 +16,7 @@ export default function Habits() {
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-20 lg:py-32 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <motion.div
@@ -58,7 +58,7 @@ export default function Habits() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
+            <div className="bg-card rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-semibold text-gray-900">Habit Tracker</h3>
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">This Week</span>

@@ -44,7 +44,7 @@ export default function ThreeSteps() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow"
+              className="bg-card rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow"
             >
               <div className="w-14 h-14 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-xl font-bold text-amber-700">{step.num}</span>

@@ -20,7 +20,7 @@ export default function Calendar() {
             transition={{ duration: 0.6 }}
             className="order-2 lg:order-1"
           >
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
+            <div className="bg-card rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-semibold text-gray-900">March 2026</h3>
                 <div className="flex gap-2">

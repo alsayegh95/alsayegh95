@@ -1,4 +1,4 @@
-ï»¿import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/DashboardLayout";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -138,7 +138,7 @@ export default function ActivityFeed() {
           </div>
         </div>
 
-        {/* Detail Panel â€” full summary, scrollable */}
+        {/* Detail Panel — full summary, scrollable */}
         <AnimatePresence>
           {selected && (
             <motion.div
@@ -147,7 +147,7 @@ export default function ActivityFeed() {
               exit={{ opacity: 0, y: 8 }}
               className="fixed bottom-4 right-4 w-[460px] max-h-[80vh] rounded-xl border border-border bg-card shadow-2xl z-50 flex flex-col"
             >
-              {/* Header â€” sticky */}
+              {/* Header — sticky */}
               <div className="flex items-center justify-between p-4 pb-2 border-b border-border shrink-0">
                 <div className="flex items-center gap-2 min-w-0">
                   {selected.status === "ok"
@@ -163,12 +163,12 @@ export default function ActivityFeed() {
                 </button>
               </div>
 
-              {/* Summary â€” scrollable */}
+              {/* Summary — scrollable */}
               <div className="flex-1 overflow-y-auto p-4 min-h-0">
                 <p className="text-xs text-foreground whitespace-pre-wrap leading-relaxed">{selected.summary}</p>
               </div>
 
-              {/* Footer â€” sticky */}
+              {/* Footer — sticky */}
               <div className="flex flex-wrap gap-3 text-[10px] text-muted-foreground font-mono p-4 pt-2 border-t border-border shrink-0">
                 <span>{agentNames[selected.agentId || ""] || selected.agentId}</span>
                 <span>{selected.model}</span>

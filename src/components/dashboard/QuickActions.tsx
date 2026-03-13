@@ -1,4 +1,4 @@
-﻿import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Plus, FileText, Brain, ScrollText, Clock, Terminal, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -108,7 +108,7 @@ export function QuickActions() {
   ];
 
   return (
-    <div className="rounded-2xl border border-border bg-white p-5 shadow-sm card-hover">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm card-hover">
       <h2 className="text-sm font-semibold text-foreground mb-4">Quick Actions</h2>
       <div className="grid grid-cols-3 gap-2">
         {actions.map((action) => (
@@ -346,7 +346,7 @@ export function QuickActions() {
                   const typeColor = entry.type === "tool" ? "text-blue-400" : entry.type === "assistant" ? "text-purple-400" : entry.type === "user" ? "text-green-400" : "text-yellow-400";
                   const typeLabel = entry.type.toUpperCase().padEnd(9);
                   return (
-                    <div key={entry.id} className="flex gap-2 leading-relaxed hover:bg-white/5 rounded px-1 -mx-1">
+                    <div key={entry.id} className="flex gap-2 leading-relaxed hover:bg-card/5 rounded px-1 -mx-1">
                       <span className="text-muted-foreground shrink-0 w-32">{time}</span>
                       <span className={"shrink-0 w-20 " + typeColor}>{typeLabel}</span>
                       <span className="text-cyan-400 shrink-0 w-28 truncate">[{entry.agent}]</span>
